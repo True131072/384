@@ -4,7 +4,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
   this.scoreManager = new ScoreManager;
   this.actuator     = new Actuator;
 
-  this.startTiles   = 2;
+  this.startTiles   = 12;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -59,7 +59,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.6 ? 1 : Math.random() < 0.8 ? 2 : 3;
+    var value = Math.random() < 0.6 ? 1 : Math.random() < 0.6 ? 2 : 3;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -129,7 +129,7 @@ GameManager.prototype.move = function (direction) {
         if (next && next.value === tile.value && !next.mergedFrom || next && next.value == 0 || next && tile.value == 0) {
           
 	        var merged = new Tile(positions.next, tile.value * 2);
-          if(next && next.value == 2) merged.value = tile.value + 2;
+          if(next && next.value == 2) merged.value = tile.value * 2;
           if(next && tile.value == 1) merged.value = next.value * 2;
           merged.mergedFrom = [tile, next];
 
